@@ -5,8 +5,8 @@
   "author": {
     "name": "TensorAI"
   },
-  "homepage": "https://github.com/bob5-tensorslab/skills_test",
-  "repository": "https://github.com/bob5-tensorslab/skills_test",
+  "homepage": "https://github.com/bob5-tensorslab/skills",
+  "repository": "https://github.com/bob5-tensorslab/skills",
   "license": "Apache-2.0",
   "keywords": [
     "tensorai",

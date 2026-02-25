@@ -102,7 +102,7 @@ def download_image(url: str, output_path: Path) -> Path:
 
 def generate_image(
     prompt: str,
-    model: str = "seedreamv45",
+    model: str = "seedreamv4",
     resolution: str = "2K",
     source_images: Optional[List[str]] = None,
     image_url: Optional[str] = None,
