@@ -1,6 +1,6 @@
 ---
 name: tensorslab-image
-description: Generate images using TensorsLab's AI image generation models. Supports text-to-image and image-to-image generation with automatic prompt enhancement, progress tracking, and local file saving. Use for generating images from text descriptions, transforming existing images, creating artistic renderings, batch generation, and various resolutions. Requires TENSORSLAB_API_KEY environment variable.
+description: Generate and edit images using TensorsLab's AI models. Supports text-to-image, image-to-image generation, plus advanced editing: avatar generation, watermark removal, object erasure, face replacement, and general image editing. Features automatic prompt enhancement, progress tracking, and local file saving. Requires TENSORSLAB_API_KEY environment variable.
 ---
 
 # TensorsLab Image Generation
@@ -41,6 +41,8 @@ Default: `seedreamv4`
 
 ## Workflow
 
+For additional scenarios beyond basic generation (avatar generation, watermark removal, object erasure, face replacement), see [references/scenarios.md](references/scenarios.md).
+
 ### 1. Text-to-Image Generation
 
 User request: "画一个在月球上吃热狗的宇航员"
@@ -74,7 +76,32 @@ User request: "把 cat.png 的背景换成太空" or "参考 sketch.png 渲染�
 - `imageUrl`: URL of source image
 - `prompt`: Description of desired transformation
 
-### 3. Resolution Options
+### 3. Image Editing (General Purpose)
+
+General-purpose editing for any local image modifications.
+
+**User request examples:**
+- "把这张图的天空改成日落色"
+- "给人物加上墨镜"
+- "把头发颜色染成粉色"
+
+**Agent processing:**
+1. Extract image file path
+2. Parse the specific editing instruction (what to change, where)
+3. Build enhanced prompt with precise editing guidance
+4. Call API with source image and editing prompt
+5. Save result to `./tensorslab_output/`
+
+**Example enhanced prompt:**
+```
+Change the sky to sunset colors with warm orange and pink gradients,
+matching the existing lighting conditions and atmospheric perspective,
+seamless blend at the horizon line
+```
+
+For avatar generation, watermark removal, object erasure, and face replacement scenarios, see [references/scenarios.md](references/scenarios.md).
+
+### 4. Resolution Options
 
 Supported formats:
 - **Aspect ratios**: `9:16`, `16:9`, `3:4`, `4:3`, `1:1`, `2:3`, `3:2`
@@ -82,12 +109,6 @@ Supported formats:
 - **Specific dimensions**: `WxH` format (e.g., `2048x2048`, `1920x1080`)
   - Constraint: Total pixels must be between 3,686,400 and 16,777,216
 
-### 4. Batch Generation
-
-Generate multiple images in one request:
-- Set `batchsize` between 1-15
-- All images use the same prompt
-- Output files named: `{task_id}_0.png`, `{task_id}_1.png`, etc.
 
 ## Using the Script
 
@@ -102,9 +123,6 @@ python scripts/tensorslab_image.py "sunset over mountains" --resolution 16:9
 
 # Image-to-image
 python scripts/tensorslab_image.py "watercolor style" --source cat.png
-
-# Batch generation
-python scripts/tensorslab_image.py "abstract patterns" --batch-size 4
 
 # Specify model
 python scripts/tensorslab_image.py "cyberpunk city" --model seedreamv45
@@ -142,3 +160,5 @@ After completion, inform user:
 
 - **scripts/tensorslab_image.py**: Main API client with full CLI support
 - **references/api_reference.md**: Detailed API documentation
+- **references/scenarios.md**: Advanced usage scenarios (avatar generation, watermark removal, object erasure, face replacement)
+
